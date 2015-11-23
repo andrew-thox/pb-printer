@@ -1,0 +1,14 @@
+deployment:
+  staging:
+    branch: master
+    codedeploy:
+      CodeDeployGitHubDemo-App:
+        application_root: /
+        region: eu-central-1
+        revision_location:
+          revision_type: S3
+          s3_location:
+            bucket: pb-deployments
+            key_pattern: pb-printer-{SHORT_COMMIT}-{BUILD_NUM}
+        deployment_group: CodeDeployGitHubDemo-DepGrp
+        deployment_config: CodeDeployDefault.AllAtOnce
