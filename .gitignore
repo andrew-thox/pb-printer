@@ -11,3 +11,6 @@ pom.xml.asc
 .hg/
 .idea/
 printer.iml
+/chef/cookbooks
+.DS_Store
+*.lock
