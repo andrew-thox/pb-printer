@@ -1,2 +1,10 @@
 version: 0.0
 os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/projects/printer
+hooks:
+  AfterInstall:
+    - location: aws-scripts/install_dependencies
+      timeout: 300
+      runas: root
