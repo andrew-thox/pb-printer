@@ -14,7 +14,7 @@ chef-client -z
 knife node run_list add -z printer recipe[lein]
 knife node run_list add -z printer recipe[git]
 knife node run_list add -z printer recipe[rabbitmq]
-#knife node run_list add -z printer recipe[rabbitmq-management]
+knife node run_list add -z printer recipe[rabbitmq-management]
 
 #Provision node
 chef-client -z
