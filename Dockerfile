@@ -1,4 +1,5 @@
 FROM clojure
+ENV DATABASE_URI postgresql://postgres@127.0.0.1:5432/postgres
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY project.clj /usr/src/app/
