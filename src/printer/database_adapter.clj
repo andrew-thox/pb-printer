@@ -2,7 +2,8 @@
   (:require [yesql.core :refer [defqueries]]
             [jdbc.pool.c3p0 :as pool]
             [environ.core :refer [env]]
-            [clj-json.core :as json])
+            [clj-json.core :as json]
+            [pandect.algo.sha256 :refer :all])
   (:import (java.net URI)))
 
 (def db-uri (URI. (env :database-uri)))
@@ -29,6 +30,6 @@
 
 (defn consume-article [payload]
   (let [article (json/parse-string (String. payload) true)
-        hash (str (hash (String. payload)))]
+        hash (str (sha256 (String. payload)))]
     (if (in_database hash) nil
       (create-article<! (conj article {:hash hash})))))
