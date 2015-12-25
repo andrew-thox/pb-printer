@@ -30,6 +30,6 @@
 
 (defn consume-article [payload]
   (let [article (json/parse-string (String. payload) true)
-        hash (str (sha256 (String. payload)))]
+        hash (str (sha256 (clojure.string/join " " [(:author article) (:title article) (:link article)])))]
     (if (in_database hash) nil
       (create-article<! (conj article {:hash hash})))))
