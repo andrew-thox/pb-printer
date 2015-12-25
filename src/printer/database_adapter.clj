@@ -1,7 +1,8 @@
 (ns printer.database-adapter
   (:require [yesql.core :refer [defqueries]]
             [jdbc.pool.c3p0 :as pool]
-            [environ.core :refer [env]])
+            [environ.core :refer [env]]
+            [clj-json.core :as json])
   (:import (java.net URI)))
 
 (def db-uri (URI. (env :database-uri)))
@@ -22,11 +23,12 @@
 (defqueries "queries/articles.sql"
   {:connection spec})
 
-(defn in_database [article]
-  (let [hash (str (hash article))
-        result (article-by-hash {:hash hash})]
+(defn in_database [hash]
+  (let [result (article-by-hash {:hash hash})]
     (if (> (count result) 0) true false )))
 
-(defn insert_article [article]
-  (if (in_database article) nil
-    (create-article<! (conj article {:hash (str (hash article))}))))
+(defn consume-article [payload]
+  (let [article (json/parse-string (String. payload) true)
+        hash (str (hash (String. payload)))]
+    (if (in_database hash) nil
+      (create-article<! (conj article {:hash hash})))))

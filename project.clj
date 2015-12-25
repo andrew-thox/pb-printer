@@ -12,7 +12,9 @@
                  [clojure.jdbc/clojure.jdbc-c3p0 "0.3.1"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]
                  ;Migrations
-                 [migratus-lein "0.1.9"]]
+                 [migratus-lein "0.1.9"]
+                 ;Hashing functions
+                 [pandect "0.5.4"]]
   :plugins [[lein-environ "1.0.1"]
             [migratus-lein "0.1.7"]]
   :main ^:skip-aot printer.core
