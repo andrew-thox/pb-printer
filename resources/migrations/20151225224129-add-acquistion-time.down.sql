@@ -1,1 +1,1 @@
-ALTER TABLE article DROP COLUMN acquistion_time restrict;
+ALTER TABLE article DROP COLUMN acquistion_date restrict;

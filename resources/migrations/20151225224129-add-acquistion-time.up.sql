@@ -1,1 +1,1 @@
-ALTER TABLE article ADD COLUMN acquistion_time TIMESTAMP;
+ALTER TABLE article ADD COLUMN acquistion_date TIMESTAMP;
