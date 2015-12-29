@@ -2,7 +2,6 @@
   (:require [yesql.core :refer [defqueries]]
             [jdbc.pool.c3p0 :as pool]
             [environ.core :refer [env]]
-            [clj-json.core :as json]
             [pandect.algo.sha256 :refer :all])
   (:import (java.net URI)))
 
@@ -28,8 +27,7 @@
   (let [result (article-by-hash {:hash hash})]
     (if (> (count result) 0) true false )))
 
-(defn consume-article [payload]
-  (let [article (json/parse-string (String. payload) true)
-        hash (str (sha256 (clojure.string/join " " [(:author article) (:title article) (:link article)])))]
+(defn consume-article [article]
+  (let [hash (str (sha256 (clojure.string/join " " [(:author article) (:title article) (:link article)])))]
     (if (in_database hash) nil
       (create-article<! (conj article {:hash hash})))))
