@@ -2,10 +2,13 @@
   (:require [yesql.core :refer [defqueries]]
             [jdbc.pool.c3p0 :as pool]
             [environ.core :refer [env]]
-            [pandect.algo.sha256 :refer :all])
+            [pandect.algo.sha256 :refer :all]
+            [clj-statsd :as statsd])
   (:import (java.net URI)))
 
 (def db-uri (URI. (env :database-uri)))
+
+(statsd/setup (env :statd-host) (env :statd-port))
 
 (def user-and-password
   (if (nil? (.getUserInfo db-uri)) nil (clojure.string/split (.getUserInfo db-uri) #":")))
@@ -30,4 +33,7 @@
 (defn consume-article [article]
   (let [hash (str (sha256 (clojure.string/join " " [(:author article) (:title article) (:link article)])))]
     (if (in_database hash) nil
-      (create-article<! (conj article {:hash hash})))))
+      (do
+        (create-article<! (conj article {:hash hash}))
+        (statsd/increment (clojure.string/lower-case (str (:publication article) "_articles_processed")))
+        (statsd/increment "articles_processed")))))

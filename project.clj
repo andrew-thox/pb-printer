@@ -15,7 +15,9 @@
                  ;Hashing functions
                  [pandect "0.5.4"]
                  ;avro
-                 [com.damballa/abracad "0.4.13"]]
+                 [com.damballa/abracad "0.4.13"]
+                 ;statsd
+                 [clj-statsd "0.3.11"]]
   :plugins [[lein-environ "1.0.1"]
             [migratus-lein "0.1.7"]]
   :main ^:skip-aot printer.core
