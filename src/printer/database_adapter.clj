@@ -8,11 +8,6 @@
 
 (def db-uri (URI. (env :database-uri)))
 
-;TODO: This should log/alert
-(try
-  (statsd/setup (env :statd-host) (env :statd-port))
-  (catch Exception e (str "caught exception: " (.getMessage e))))
-
 (def user-and-password
   (if (nil? (.getUserInfo db-uri)) nil (clojure.string/split (.getUserInfo db-uri) #":")))
 
