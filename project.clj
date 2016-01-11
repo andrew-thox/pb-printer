@@ -21,7 +21,10 @@
                  [clj-statsd "0.3.11"]
                  ;pail
                  [clj-pail "0.1.5"]
-                 [pail-thrift "0.1.1"]]
+                 [pail-thrift "0.1.1"]
+                 [pail-cascalog "0.1.0"]
+                 ;cascalog
+                 [cascalog/cascalog-core "2.1.1"]]
   :plugins [[lein-environ "1.0.1"]
             [migratus-lein "0.1.7"]
             [clj-thrift "0.1.3"]
