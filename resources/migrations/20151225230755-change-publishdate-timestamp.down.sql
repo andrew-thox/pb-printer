@@ -1,2 +1,0 @@
-ALTER TABLE article
-    ALTER COLUMN publish_date SET DATA TYPE VARCHAR;

@@ -1,1 +1,0 @@
-ALTER TABLE article ADD COLUMN acquistion_date TIMESTAMP;
