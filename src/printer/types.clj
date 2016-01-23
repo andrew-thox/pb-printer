@@ -26,49 +26,21 @@
                    type
                    opts)))))
 
-(get-or-create-type "bing" String {:indexed-vertex? true
-                                   :unique-direction :both})
-
 ;define name
 ;Is it possible to have a collision between author name and pub name?
 ;We obviously can't handle multiple authors with the same name, at least not in V1
 ;Google and Amazon don't handle this well
-;TODO: Make this idempotent?
 
 (defn create-types []
-  (tg/transact!
-    (tt/defkey :name String
-               {:indexed-vertex? true
-                :unique-direction :both}))
-
-  (tg/transact!
-    (tt/defkey :type String
-               {:indexed-vertex? true
-                :unique-direction :out}))
-  (tg/transact!
-    (tt/defkey :url String
-               {:indexed-vertex? true
-                :unique-direction :both}))
-
-  (tg/transact!
-    (tt/defkey :title String
-               {:unique-direction :out}))
-
-  (tg/transact!
-    (tt/defkey :date_published Long
-               {:unique-direction :out}))
-
-  (tg/transact!
-    (tt/defkey :third_party_guid String
-               {:indexed-vertex? true}))
-
-  (tg/transact!
-    (tt/defkey :hash String
-               {:unique-direction :out}))
-
-  (tg/transact!
-    (tt/defkey :body String
-               {:unique-direction :out}))
+  (get-or-create-type "name" String {:indexed-vertex? true :unique-direction :both})
+  (get-or-create-type "type" String {:indexed-vertex? true :unique-direction :out})
+  (get-or-create-type "url" String {:indexed-vertex? true :unique-direction :both})
+  (get-or-create-type "title" String {:unique-direction :out})
+  (get-or-create-type "date-published" Long {:unique-direction :out})
+  (get-or-create-type "date-processed" Long {:unique-direction :out})
+  (get-or-create-type "third-party-guid" String {:unique-direction :out :indexed-vertex? true})
+  (get-or-create-type "hash" String {:unique-direction :out})
+  (get-or-create-type "body" String {:unique-direction :out})
 
   ;edge labels
   (tg/transact!
