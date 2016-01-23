@@ -17,7 +17,9 @@
                  ;avro
                  [com.damballa/abracad "0.4.13"]
                  ;statsd
-                 [clj-statsd "0.3.11"]]
+                 [clj-statsd "0.3.11"]
+                 ;titan
+                 [clojurewerkz/titanium "1.0.0-beta1"]]
   :plugins [[lein-environ "1.0.1"]
             [migratus-lein "0.1.7"]]
   :main ^:skip-aot printer.core

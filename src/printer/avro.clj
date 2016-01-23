@@ -1,4 +1,4 @@
-(ns printer.schemas
+(ns printer.avro
   (:require [abracad.avro :as avro]
             [abracad.avro.edn :as aedn]))
 
