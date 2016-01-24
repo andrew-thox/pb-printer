@@ -41,15 +41,15 @@
 ;Google and Amazon don't handle this well
 
 (defn create-types []
-  (get-or-create-property-keys "name" String {:indexed-vertex? true :unique-direction :both})
-  (get-or-create-property-keys "type" String {:indexed-vertex? true :unique-direction :out})
-  (get-or-create-property-keys "url" String {:indexed-vertex? true :unique-direction :both})
-  (get-or-create-property-keys "title" String {:unique-direction :out})
-  (get-or-create-property-keys "date-published" Long {:unique-direction :out})
-  (get-or-create-property-keys "date-processed" Long {:unique-direction :out})
-  (get-or-create-property-keys "third-party-guid" String {:unique-direction :out :indexed-vertex? true})
-  (get-or-create-property-keys "hash" String {:unique-direction :out})
-  (get-or-create-property-keys "body" String {:unique-direction :out})
+  (get-or-create-property-key "name" String {:indexed-vertex? true :unique-direction :both})
+  (get-or-create-property-key "type" String {:indexed-vertex? true :unique-direction :out})
+  (get-or-create-property-key "url" String {:indexed-vertex? true :unique-direction :both})
+  (get-or-create-property-key "title" String {:unique-direction :out})
+  (get-or-create-property-key "date-published" Long {:unique-direction :out})
+  (get-or-create-property-key "date-processed" Long {:unique-direction :out})
+  (get-or-create-property-key "third-party-guid" String {:unique-direction :out :indexed-vertex? true})
+  (get-or-create-property-key "hash" String {:unique-direction :out})
+  (get-or-create-property-key "body" String {:unique-direction :out})
 
   (get-or-create-edge-label "wrote")
   (get-or-create-edge-label "published"))
