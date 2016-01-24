@@ -14,8 +14,8 @@
  (doseq [v (tv/get-all-vertices)]
    (tv/remove! v)))
 
-;TODO: check argument types
-(defn get-or-create-type
+;TODO: check argument types, both as inputs to the func and check that existing keys are keys and edge labels are edge labels
+(defn get-or-create-property-keys
   "some desc"
   [name type opts]
   (let [existing-type (tg/transact! (tt/get-type name))]
@@ -26,35 +26,41 @@
                    type
                    opts)))))
 
+(defn get-or-create-edge-label
+  "some desc"
+  [name]
+    (let [existing-type (tg/transact! (tt/get-type name))]
+    (if existing-type
+      existing-type
+      (tg/transact!
+        (tt/deflabel (keyword name))))))
+
 ;define name
 ;Is it possible to have a collision between author name and pub name?
 ;We obviously can't handle multiple authors with the same name, at least not in V1
 ;Google and Amazon don't handle this well
 
 (defn create-types []
-  (get-or-create-type "name" String {:indexed-vertex? true :unique-direction :both})
-  (get-or-create-type "type" String {:indexed-vertex? true :unique-direction :out})
-  (get-or-create-type "url" String {:indexed-vertex? true :unique-direction :both})
-  (get-or-create-type "title" String {:unique-direction :out})
-  (get-or-create-type "date-published" Long {:unique-direction :out})
-  (get-or-create-type "date-processed" Long {:unique-direction :out})
-  (get-or-create-type "third-party-guid" String {:unique-direction :out :indexed-vertex? true})
-  (get-or-create-type "hash" String {:unique-direction :out})
-  (get-or-create-type "body" String {:unique-direction :out})
+  (get-or-create-property-keys "name" String {:indexed-vertex? true :unique-direction :both})
+  (get-or-create-property-keys "type" String {:indexed-vertex? true :unique-direction :out})
+  (get-or-create-property-keys "url" String {:indexed-vertex? true :unique-direction :both})
+  (get-or-create-property-keys "title" String {:unique-direction :out})
+  (get-or-create-property-keys "date-published" Long {:unique-direction :out})
+  (get-or-create-property-keys "date-processed" Long {:unique-direction :out})
+  (get-or-create-property-keys "third-party-guid" String {:unique-direction :out :indexed-vertex? true})
+  (get-or-create-property-keys "hash" String {:unique-direction :out})
+  (get-or-create-property-keys "body" String {:unique-direction :out})
 
-  ;edge labels
-  (tg/transact!
-    (tt/deflabel :wrote ))
-  ;published
-  (tg/transact!
-    (tt/deflabel :published )))
-  ;equiv - possible implementation of authors who have multiple names
+  (get-or-create-edge-label "wrote")
+  (get-or-create-edge-label "published"))
+
+
 
 ;Other ideas
 ;pedigree
 ;date
 ;source
-
+  ;equiv - possible implementation of authors who have multiple names
 ;(tg/open "/Users/andrew/Programming/cloggs/printer/example-db")
 
 (require '[clojurewerkz.titanium.graph    :as tg])
