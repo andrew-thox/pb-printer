@@ -15,7 +15,7 @@
    (tv/remove! v)))
 
 ;TODO: check argument types, both as inputs to the func and check that existing keys are keys and edge labels are edge labels
-(defn get-or-create-property-keys
+(defn get-or-create-property-key
   "some desc"
   [name type opts]
   (let [existing-type (tg/transact! (tt/get-type name))]
