@@ -10,6 +10,7 @@
 
 (defn -main [& args]
   ;TODO: This should log/alert
+  ;TODO: open titan db
   (try
     (statsd/setup (env :statd-host) (env :statd-port))
   (catch Exception e (str "caught exception: " (.getMessage e))))

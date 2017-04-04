@@ -26,6 +26,7 @@
                    type
                    opts)))))
 
+;TODO: implement opts for edge labels
 (defn get-or-create-edge-label
   "some desc"
   [name]
@@ -39,6 +40,7 @@
 ;Is it possible to have a collision between author name and pub name?
 ;We obviously can't handle multiple authors with the same name, at least not in V1
 ;Google and Amazon don't handle this well
+;TODO: It's pretty pointless returning the output of the last edge label
 
 (defn create-types []
   (get-or-create-property-key "name" String {:indexed-vertex? true :unique-direction :both})

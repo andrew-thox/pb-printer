@@ -7,20 +7,23 @@
 ;current fields of article
 ;:title, :author, :publication, to_timestamp(:publish_date/1000), :link,  to_timestamp(:acquistion_date/1000), :hash
 ;TODO: we need to know the source
-;TODO: Catch specific exception
+;TODO: narrow caught exception down beyond illegalargumentexception
 
 (defn create-article-vertex
   "create an article vertex, contains only type and url (url == pk) - i"
   [url title date-published date-processed body]
   (try
     (tg/transact!
-      (tv/create! {:url url
-                   :type "article"
-                   :title title
-                   :date-published date-published
-                   :date-processed date-processed
-                   :body body}))
-   (catch Exception e (first (tg/transact! (tv/find-by-kv :url url))))))
+      (let [vertex (tv/create! {:url url
+                                :type "article"
+                                :title title
+                                :date-published date-published
+                                :date-processed date-processed})]
+        ;When multiple optional args I think we should merge a map of all opt args provided
+        ;Body should not be optional once we implement scraping it
+        (if body (tv/assoc! (tv/refresh vertex) :body body)) vertex))
+   ;IllegalArguementException implies article vertex already exists
+   (catch IllegalArgumentException e (first (tg/transact! (tv/find-by-kv :url url))))))
 
 (defn create-author-vertex
   "create an author vertex from name - idempotent"
@@ -78,10 +81,9 @@
   ;new outlet, create outlet, create edge
 
 
-(def example-article {:publication "New Statesman"
+(def article {:publication "New Statesman"
  :title "Truth and reconciliation? The reality is Northern Ireland will have neither"
  :author "Kevin Meagher"
- :link "http://www.newstatesman.com/politics/devolution/2016/01/truth-and-reconciliation-reality-northern-ireland-will-have-neither"
+ :link "http://www.statesman.com/politics/devolution/2016/01/truth-and-reconciliation-reality-northern-ireland-will-have-neither"
  :publish_date 1452685252000
- :acquistion_date 1453327403433
- :body "This is the body"})
+ :acquistion_date 1453327403433})
