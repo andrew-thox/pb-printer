@@ -4,7 +4,15 @@ FIXME: description
 
 ## Installation
 
-Download from http://example.com/FIXME.
+First set DATABASE_URI environment variable (example below):
+
+```export DATABASE_URI=postgresql://postgres@192.168.99.100:5432/postgres```
+
+project.cli doesn't get values from profiles.cli (maybe this can be improved)
+
+To run migrations use the following command:
+
+```lein migratus migrate```
 
 ## Usage
 
