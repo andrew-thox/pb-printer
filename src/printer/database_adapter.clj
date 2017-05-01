@@ -6,32 +6,10 @@
             [clj-statsd :as statsd])
   (:import (java.net URI)))
 
-(def db-uri (URI. (env :database-uri)))
-
-(def user-and-password
-  (if (nil? (.getUserInfo db-uri)) nil (clojure.string/split (.getUserInfo db-uri) #":")))
-
-(def spec
-  (pool/make-datasource-spec
-    {:classname "org.postgresql.Driver"
-     :subprotocol "postgresql"
-     :user (get user-and-password 0)
-     :password (get user-and-password 1)
-     :subname (if (= -1 (.getPort db-uri))
-                (format "//%s%s" (.getHost db-uri) (.getPath db-uri))
-                (format "//%s:%s%s" (.getHost db-uri) (.getPort db-uri) (.getPath db-uri)))}))
-
-(defqueries "queries/articles.sql"
-  {:connection spec})
-
-(defn in_database [hash]
-  (let [result (article-by-hash {:hash hash})]
-    (if (> (count result) 0) true false )))
-
 (defn consume-article [article]
   (let [hash (str (sha256 (clojure.string/join " " [(:author article) (:title article) (:link article)])))]
-    (if (in_database hash) nil
+    (if false nil
       (do
-        (create-article<! (conj article {:hash hash}))
+        (println (conj article {:hash hash}))
         (statsd/increment (clojure.string/lower-case (str (:publication article) "_articles_processed")))
         (statsd/increment "articles_processed")))))

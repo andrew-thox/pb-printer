@@ -3,15 +3,16 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.7.0"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                  ;Elastic
+                 [cc.qbits/spandex "0.3.9"]
+                 ; Environment
                  [environ "0.5.0"]
                  [com.novemberain/langohr "3.0.0-rc2"]
                  ;Database dependencies
                  [yesql "0.5.1"]
                  [clojure.jdbc/clojure.jdbc-c3p0 "0.3.1"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]
-                 ;Migrations
-                 [migratus-lein "0.1.9"]
                  ;Hashing functions
                  [pandect "0.5.4"]
                  ;avro
@@ -19,7 +20,7 @@
                  ;statsd
                  [clj-statsd "0.3.11"]]
   :plugins [[lein-environ "1.0.1"]
-            [migratus-lein "0.1.7"]]
+            [lein-gorilla "0.4.0"]]
   :main ^:skip-aot printer.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}}
