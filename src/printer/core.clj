@@ -9,11 +9,6 @@
             [clj-statsd :as statsd]))
 
 (defn -main [& args]
-  ;TODO: This should log/alert
-  (try
-    (statsd/setup (env :statd-host) (env :statd-port))
-  (catch Exception e (str "caught exception: " (.getMessage e))))
-
   (let [conn  (rmq/connect {:uri (env :amqp-url)})
         ch    (lch/open conn)]
     (println (format "[main] Connected. Channel id: %d" (.getChannelNumber ch)))
