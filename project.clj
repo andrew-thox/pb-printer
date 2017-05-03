@@ -18,7 +18,8 @@
                  ;avro
                  [com.damballa/abracad "0.4.13"]
                  ;statsd
-                 [clj-statsd "0.3.11"]]
+                 [clj-statsd "0.3.11"]
+                 [org.clojure/core.async "0.3.442"]]
   :plugins [[lein-environ "1.0.1"]
             [lein-gorilla "0.4.0"]]
   :main ^:skip-aot printer.core
